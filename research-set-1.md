@@ -1,26 +1,23 @@
-1. What is the HTTP protocol?
-    HTTP protocol  is a communication between client and server and they have three parts like
-    request line, header, body.
+1. HTTP
+A stateless, application-layer request-response protocol running over TCP/QUIC to transmit hypermedia like HTML and JSON across the web.
 
-2. What is a web application?
-    web application is a website like a amazon,flipkart which runs in wed browsers and access remotely
+2. Web Application
+An interactive client-server software application accessed via a web browser that executes dynamic business logic, manages application state, and persists database records.
 
-3. What is a web server?
-    A computer or server that stays connected to the internet ,storing a website’s files and delivering them whenever someone types the URL.(like cloud)
+3. Web Server
+A host system and software (e.g., Nginx, Apache) that listens on network ports to serve static assets or reverse-proxy incoming HTTP/HTTPS traffic to application services.
 
-4. What is the HTTPS protocol, and why is it considered secure?
-    HTTP layered over TLS/SSL encryption . it is secure because it encrypts data in transit to protect privacy, ensures message integrity.
+4. HTTPS & Security
+HTTP encrypted over TLS on port 443; it guarantees confidentiality via asymmetric/symmetric encryption, message integrity using MACs, and server authenticity via CA-signed certificates.
 
-5. What is authentication, and what is authorization?
-    Authentication verifies who you are (identity confirmation)
-    Authorization determines what you are allowed to do (access permissions and rights).
+5. Authentication vs. Authorization
+Authentication validates identity ("who you are" via passwords/MFA), while authorization determines access privileges ("what you can do" via roles, scopes, or ACLs).
 
-6. How does social login (signing in via Google or Facebook) work?
-    A shortcut where a trusted app like Google or Facebook proves your identity so you don't have to create a brand-new username and password (typically using OAuth 2.0 and OpenID Connect).
+6. Social Login Flow
+Delegates identity verification to a provider (Google/Facebook) using OpenID Connect and OAuth 2.0, exchanging a front-channel authorization code for a cryptographically verified ID/access token.
 
-7. What is synchronous vs asynchronous communication between web applications?
-    Synchronous communication blocks execution while waiting for an immediate response from the receiver.
-    Asynchronous communication allows the sender to proceed immediately without waiting, handling responses via callbacks, queues, or events.
+7. Synchronous vs. Asynchronous Communication
+Synchronous calls block execution while waiting for an immediate HTTP/gRPC response, whereas asynchronous systems decouple operations by emitting non-blocking messages/events through brokers like Kafka or SQS.
 
-8. What is REST — the standard or recommendation for web applications?
-    REST (Representational State Transfer): An architectural design style and recommendation that guides scalable web API design using standard HTTP verbs, stateless requests, and uniform resource identifiers.
+8. REST Architecture
+An architectural style—not an enforced standard—defined by Roy Fielding that relies on statelessness, uniform resource endpoints (URIs), standard HTTP verbs, and decoupled client-server interaction.
