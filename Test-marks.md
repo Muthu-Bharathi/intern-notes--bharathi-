@@ -1,0 +1,17 @@
+Field Guide progress — Muthu Bharathi
+as of 2026-10-07
+
+Week 0 — Setup & ground rules
+  read: yes   checklist: 5/5   quiz best: 69% (1 att)
+Week 1 — How the web works
+  read: yes   checklist: 10/10   quiz best: 78% (1 att)
+Week 2 — APIs, data & architecture
+  read: yes   checklist: 13/13   quiz best: 84% (1 att)
+Week 3 — Programming foundations
+  read: yes   checklist: 7/7   quiz best: 87% (1 att)
+Week 4 — Building a backend service
+  read: yes   checklist: 10/10   quiz best: 100% (1 att)
+Week 5 — Virtualisation & containers
+  read: yes   checklist: 7/7   quiz best: 96% (1 att)
+Week 6 — Compose & the capstone
+  read: yes   checklist: 6/9   quiz best: not taken

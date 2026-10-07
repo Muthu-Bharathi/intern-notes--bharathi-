@@ -112,3 +112,7 @@
   1. **Syntactically Valid Request:** The HTTP request itself was well-formed, so the server did not return `400 Bad Request`.
   2. **Active Quota:** The client had remaining rate limit capacity, so it did not return `429 Too Many Requests`.
   3. **Missing Resource:** The GitHub identity routing service evaluated the path `/users/this-user-does-not-exist-99999` against its database and found no corresponding record. Per REST specifications, servers return `404 Not Found` when the endpoint route exists but the specified entity cannot be found.
+
+
+
+
