@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: community-library
+
+  config:
+    import: optional:file:.env[.properties]
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/community_library}
+    username: root
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Token-oda "iss" claim idhoda match aaganum; signature Keycloak public keys (certs) vachu verify aagum
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8180/realms/community-library}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs}
+
+app:
+  keycloak:
+    client-id: ${KEYCLOAK_CLIENT_ID:community-library-app}
+
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: ${app.keycloak.client-id}
+      use-pkce-with-authorization-code-grant: true
+      # Always show the Keycloak login form, even if the browser is already signed in (easy to switch users)
+      additional-query-string-params:
+        prompt: login
+
+server:
+  port: 8085
