@@ -2,9 +2,9 @@ package com.example.community_library.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity // role checks live on controller methods via @PreAuthorize
 public class SecurityConfig {
 
     // Keycloak realm roles
@@ -47,12 +48,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.GET, "/api/books/**").hasRole(MEMBER)
-                        .requestMatchers("/api/books/**").hasRole(LIBRARIAN)
-                        .requestMatchers("/api/members/**").hasRole(LIBRARIAN)
-                        .requestMatchers(HttpMethod.GET, "/api/loans/**").hasRole(MEMBER)
-                        .requestMatchers("/api/loans/**").hasRole(LIBRARIAN)
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )

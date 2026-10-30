@@ -5,6 +5,7 @@ import com.example.community_library.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +18,21 @@ public class BookController {
     private final BookService bookService;
 
     // GET all books - 200 OK
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
         return ResponseEntity.status(200).body(bookService.getAllBooks());
     }
 
     // GET book by ID - 200 OK
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         return ResponseEntity.status(200).body(bookService.getBookById(id));
     }
 
     // POST create book - 201 Created
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @PostMapping
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
         Book created = bookService.createBook(book);
@@ -36,6 +40,7 @@ public class BookController {
     }
 
     // PUT update book - 200 OK
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(
             @PathVariable Long id,
@@ -45,6 +50,7 @@ public class BookController {
     }
 
     // DELETE book - 204 No Content
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);

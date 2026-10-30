@@ -3,6 +3,7 @@ package com.example.community_library.controller;
 import com.example.community_library.dto.UserResponse;
 import com.example.community_library.security.KeycloakRoleConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class AuthController {
 
     private final KeycloakRoleConverter keycloakRoleConverter;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN', 'MEMBER')")
     @GetMapping("/me")
     public UserResponse me(@AuthenticationPrincipal Jwt jwt) {
         return new UserResponse(

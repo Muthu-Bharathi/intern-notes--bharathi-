@@ -5,6 +5,7 @@ import com.example.community_library.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class MemberController {
     private final MemberService memberService;
 
     // GET all members
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @GetMapping
     public List<Member> getAllMembers() {
 
@@ -26,12 +28,14 @@ public class MemberController {
     }
 
     // GET member by ID
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @GetMapping("/{id}")
     public Member getMemberById(@PathVariable Long id) {
         return memberService.getMemberById(id);
     }
 
     // POST create member
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @PostMapping
     public ResponseEntity<?> createMember(@RequestBody Member member) {
         Member created = memberService.createMember(member);
@@ -39,6 +43,7 @@ public class MemberController {
     }
 
     // PUT update member
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     @PutMapping("/{id}")
     public Member updateMember(
             @PathVariable Long id,
@@ -48,6 +53,7 @@ public class MemberController {
     }
 
     // DELETE member
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public String deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
