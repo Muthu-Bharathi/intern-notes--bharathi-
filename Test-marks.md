@@ -1,5 +1,5 @@
 Field Guide progress — Muthu Bharathi
-as of 2026-10-07
+as of 2026-11-04
 
 Week 0 — Setup & ground rules
   read: yes   checklist: 5/5   quiz best: 69% (1 att)
@@ -14,4 +14,4 @@ Week 4 — Building a backend service
 Week 5 — Virtualisation & containers
   read: yes   checklist: 7/7   quiz best: 96% (1 att)
 Week 6 — Compose & the capstone
-  read: yes   checklist: 6/9   quiz best: not taken
+  read: yes   checklist: 9/9   quiz best: 93% (1 att)
