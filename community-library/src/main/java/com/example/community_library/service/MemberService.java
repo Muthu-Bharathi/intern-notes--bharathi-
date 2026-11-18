@@ -20,6 +20,7 @@ public class MemberService {
         member.setName(request.getName());
         member.setEmail(request.getEmail());
         member.setPhone(request.getPhone());
+        member.setAge(request.getAge());
 
         return memberRepository.save(member);
     }
@@ -40,6 +41,7 @@ public class MemberService {
         member.setName(request.getName());
         member.setEmail(request.getEmail());
         member.setPhone(request.getPhone());
+        member.setAge(request.getAge());
 
         return memberRepository.save(member);
     }

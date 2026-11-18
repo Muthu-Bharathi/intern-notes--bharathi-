@@ -7,7 +7,7 @@ COPY src ./src
 RUN mvn -q -B -DskipTests package
 
 # Stage 2: small image with only Java + the jar
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/community-library-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8085
