@@ -26,5 +26,5 @@ public class Member {
 
     private String phone;
 
-    private int age;
+    private Integer age;
 }

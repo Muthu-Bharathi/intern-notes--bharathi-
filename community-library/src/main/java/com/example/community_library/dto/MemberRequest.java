@@ -10,5 +10,5 @@ public class MemberRequest {
     private String name;
     private String email;
     private String phone;
-    private int age;
+    private Integer age;
 }
