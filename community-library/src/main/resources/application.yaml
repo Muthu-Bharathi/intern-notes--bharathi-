@@ -35,7 +35,15 @@ spring:
 
 app:
   keycloak:
+    server-url: ${KEYCLOAK_SERVER_URL:http://localhost:8180}
+    realm: ${KEYCLOAK_REALM:community-library}
     client-id: ${KEYCLOAK_CLIENT_ID:community-library-app}
+    admin-username: ${KEYCLOAK_ADMIN:admin}
+    admin-password: ${KEYCLOAK_ADMIN_PASSWORD:}
+    # First-login password for new librarians / members when the request leaves "password" empty
+    default-user-password: ${DEFAULT_USER_PASSWORD:Welcome@123}
+    # The default password stops working if it is not changed within this many seconds
+    temp-password-validity-seconds: ${TEMP_PASSWORD_VALIDITY_SECONDS:120}
 
 springdoc:
   swagger-ui:
@@ -48,3 +56,6 @@ springdoc:
 
 server:
   port: 8085
+  error:
+    # Show the reason in error responses, e.g. "role must be LIBRARIAN or MEMBER" (no stack traces)
+    include-message: always

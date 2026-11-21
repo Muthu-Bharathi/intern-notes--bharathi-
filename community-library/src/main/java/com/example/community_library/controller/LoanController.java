@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/loans")
-@RequiredArgsConstructor
+@RequiredArgsConstructor 
 public class LoanController {
 
     private final LoanService loanService;

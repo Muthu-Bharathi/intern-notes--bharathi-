@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/admin/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.GET, "/api/books/**").hasRole(MEMBER)
                         .requestMatchers("/api/books/**").hasRole(LIBRARIAN)

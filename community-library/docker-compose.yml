@@ -23,7 +23,7 @@ services:
     # Keycloak listens on 8180 (8080 on this machine is used by Apache)
     # Starts empty: the realm, roles, client and users are created by hand in the admin console.
     # (To auto-create them instead: add --import-realm here and mount ./keycloak at /opt/keycloak/data/import)
-    command: start-dev --http-port=8180
+    command: start-dev --http-port=8180 --import-realm
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?KEYCLOAK_ADMIN_PASSWORD is not set in .env}
@@ -31,6 +31,7 @@ services:
       - "8180:8180"
     volumes:
       - keycloak-data:/opt/keycloak/data
+      - ./keycloak:/opt/keycloak/data/import:ro
 
   app:
     build: .
@@ -44,6 +45,11 @@ services:
       DB_URL: jdbc:mysql://mysql:3306/community_library
       DB_PASSWORD: ${DB_PASSWORD}
       KEYCLOAK_ISSUER_URI: http://localhost:8180/realms/community-library
+      KEYCLOAK_SERVER_URL: ${KEYCLOAK_SERVER_URL:-http://keycloak:8180}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      DEFAULT_USER_PASSWORD: ${DEFAULT_USER_PASSWORD:-Welcome@123}
+      TEMP_PASSWORD_VALIDITY_SECONDS: ${TEMP_PASSWORD_VALIDITY_SECONDS:-120}
       # Required in Docker: inside the app container "localhost" is the app itself,
       # so the signing keys are fetched from the keycloak container by name (same port 8180)
       KEYCLOAK_JWK_SET_URI: http://keycloak:8180/realms/community-library/protocol/openid-connect/certs

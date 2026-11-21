@@ -1,5 +1,6 @@
 package com.example.community_library.service;
 
+import com.example.community_library.dto.LoanRequest;
 import com.example.community_library.entity.Book;
 import com.example.community_library.entity.Loan;
 import com.example.community_library.entity.Member;
@@ -20,8 +21,37 @@ public class LoanService {
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
 
-    public Loan createLoan(Loan request) {
+    public Loan createLoan(LoanRequest request) {
+        Long bookId = request.getResolvedBookId();
+        Long memberId = request.getResolvedMemberId();
 
+        if (bookId == null || memberId == null) {
+            throw new RuntimeException("Book ID and Member ID are required");
+        }
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("Member not found"));
+
+        if (!book.getAvailable()) {
+            throw new RuntimeException("Book is not available");
+        }
+
+        Loan loan = new Loan();
+        loan.setBook(book);
+        loan.setMember(member);
+        loan.setLoanDate(LocalDate.now());
+        loan.setStatus("BORROWED");
+
+        book.setAvailable(false);
+        bookRepository.save(book);
+
+        return loanRepository.save(loan);
+    }
+
+    public Loan createLoan(Loan request) {
         Book book = bookRepository.findById(request.getBook().getId())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
@@ -33,7 +63,6 @@ public class LoanService {
         }
 
         Loan loan = new Loan();
-
         loan.setBook(book);
         loan.setMember(member);
         loan.setLoanDate(LocalDate.now());
@@ -54,8 +83,28 @@ public class LoanService {
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
     }
 
-    public Loan updateLoan(Long id, Loan request) {
+    public Loan updateLoan(Long id, LoanRequest request) {
+        Loan loan = getLoanById(id);
 
+        Long bookId = request.getResolvedBookId();
+        Long memberId = request.getResolvedMemberId();
+
+        if (bookId != null) {
+            Book book = bookRepository.findById(bookId)
+                    .orElseThrow(() -> new RuntimeException("Book not found"));
+            loan.setBook(book);
+        }
+
+        if (memberId != null) {
+            Member member = memberRepository.findById(memberId)
+                    .orElseThrow(() -> new RuntimeException("Member not found"));
+            loan.setMember(member);
+        }
+
+        return loanRepository.save(loan);
+    }
+
+    public Loan updateLoan(Long id, Loan request) {
         Loan loan = getLoanById(id);
 
         Book book = bookRepository.findById(request.getBook().getId())
@@ -71,7 +120,6 @@ public class LoanService {
     }
 
     public void deleteLoan(Long id) {
-
         Loan loan = getLoanById(id);
 
         if ("BORROWED".equals(loan.getStatus())) {
@@ -84,7 +132,6 @@ public class LoanService {
     }
 
     public Loan returnLoan(Long id) {
-
         Loan loan = getLoanById(id);
 
         if ("RETURNED".equals(loan.getStatus())) {

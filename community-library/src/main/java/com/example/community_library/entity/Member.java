@@ -27,4 +27,15 @@ public class Member {
     private String phone;
 
     private Integer age;
+
+    @Column(nullable = false)
+    private String role;
+
+    // Keycloak user id of this person's login (null for rows created before logins were linked)
+    @Column(name = "keycloak_user_id", unique = true, length = 36)
+    private String keycloakUserId;
+
+    // When the default first-login password stops working (null = nothing pending)
+    @Column(name = "temp_password_expires_at")
+    private java.time.LocalDateTime tempPasswordExpiresAt;
 }
