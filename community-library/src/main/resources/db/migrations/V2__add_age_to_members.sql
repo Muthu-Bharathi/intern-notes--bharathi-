@@ -1,0 +1,2 @@
+ALTER TABLE members
+    ADD COLUMN age INT NULL AFTER phone;
